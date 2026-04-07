@@ -109,6 +109,7 @@ export async function GET(request: NextRequest) {
           discount: 1,
           spendedMoney: "$userInfo.spendedMoney",
           isVerified: "$userInfo.isVerified",
+          profilePicture: "$userInfo.profilePicture",
         },
       },
       {
@@ -310,6 +311,7 @@ export async function POST(request: NextRequest) {
           totalOrders: 1,
           lastOrderDate: 1,
           roleName: 1,
+          profilePicture: "$userInfo.profilePicture",
         },
       },
       {

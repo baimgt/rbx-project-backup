@@ -592,15 +592,15 @@ export default function HomePage() {
 
             {/* Enhanced CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
-              <button
-                onClick={handleScrollToPembelian}
+              <Link
+                href="/rbx"
                 className="group relative btn-neon-primary text-white px-10 py-5 rounded-2xl font-bold text-xl transition-all duration-500 transform hover:scale-105 shadow-2xl hover:shadow-neon-pink/40"
               >
                 <div className="flex items-center justify-center gap-3">
                   <Rocket className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
                   Beli RBX Sekarang
                 </div>
-              </button>
+              </Link>
               <Link
                 href="/track-order"
                 className="group relative bg-white/10 backdrop-blur-md text-white border-2 border-white/20 hover:border-neon-purple/60 px-10 py-5 rounded-2xl font-bold text-xl transition-all duration-500 transform hover:scale-105 hover:bg-white/20"
@@ -1386,12 +1386,12 @@ export default function HomePage() {
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                  <button
-                    onClick={handleScrollToPembelian}
-                    className="btn-neon-primary px-8 py-4 rounded-2xl font-semibold text-lg hover:-translate-y-2 transition-all duration-300"
+                  <Link
+                    href="/rbx"
+                    className="btn-neon-primary px-8 py-4 rounded-2xl font-semibold text-lg hover:-translate-y-2 transition-all duration-300 text-center"
                   >
                     Beli RBX Sekarang
-                  </button>
+                  </Link>
                   <Link
                     href="/gamepass"
                     className="btn-neon-secondary px-8 py-4 rounded-2xl font-semibold text-lg hover:-translate-y-2 transition-all duration-300 text-center"
