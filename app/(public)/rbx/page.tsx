@@ -370,7 +370,7 @@ export default function RBXLandingPage() {
                 </h2>
 
                 <p className="text-white/45 text-xs sm:text-sm md:text-base mb-5 sm:mb-6 max-w-lg mx-auto md:mx-0 leading-relaxed">
-                  Jangan khawatir! Tim CS kami siap bantu kamu kapan saja. Hubungi langsung lewat WhatsApp untuk bantuan cepat dan ramah.
+                  Jangan khawatir! Tim CS kami siap bantu kamu kapan saja. Hubungi lewat WhatsApp atau chat langsung di website.
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3">
@@ -381,6 +381,13 @@ export default function RBXLandingPage() {
                     <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />
                     Hubungi via WhatsApp
                   </button>
+                  <Link
+                    href="/chat"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-primary-100/20 hover:bg-primary-100/30 text-white font-bold text-sm sm:text-base rounded-xl transition-all duration-300 border border-primary-100/40 hover:border-primary-100/60"
+                  >
+                    <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />
+                    Chat di Website
+                  </Link>
                   <span className="text-white/30 text-[10px] sm:text-xs">Respon cepat &bull; Tersedia 24/7</span>
                 </div>
               </div>
