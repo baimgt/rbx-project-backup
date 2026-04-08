@@ -1,10 +1,10 @@
-# CHANGELOG - RBXNET UI Update
+# CHANGELOG - RBXNET Update
 **Tanggal: 8 April 2026**
 
 ---
 
 ## Ringkasan
-Update UI/tampilan website RBXNET. Semua perubahan hanya di sisi frontend (tampilan). Logic backend, payment, auth, database, dan fitur lainnya TIDAK diubah.
+Update UI/tampilan website RBXNET + fitur baru Klaim Gamepass + proteksi chat room.
 
 ---
 
@@ -34,7 +34,11 @@ Update UI/tampilan website RBXNET. Semua perubahan hanya di sisi frontend (tampi
 - Responsive untuk semua device
 - Teks FAQ refund: ditambahkan "jika pesanan belum diproses dalam 3 hari"
 
-### 4. `app/page.tsx` — Home Page
+### 4. `app/page.tsx` — Home Page + Hide Tombol Mobile
+**Tombol Panduan & Lacak Pesanan di hero desktop:**
+- Disembunyikan di mobile (hidden md:block), tetap tampil di desktop
+- Tombol "Beli RBX Sekarang" tetap tampil di semua device
+
 **Mobile hero baru (hanya tampil di HP):**
 - Mascot + "Selamat Datang di RBXNET" sejajar
 - Grid produk: RBX 5 Hari, RBX Via Login, Gamepass, Panduan, Lacak Pesanan
@@ -64,11 +68,19 @@ Update UI/tampilan website RBXNET. Semua perubahan hanya di sisi frontend (tampi
 - Import dan render BottomNav component
 - Tambah spacer div di bawah agar konten tidak tertutup bottom nav di mobile
 
-### 6. `app/transaction/page.tsx` — Fix Layout Invoice
+### 6. `app/transaction/page.tsx` — Fix Layout Invoice + Tombol Klaim Gamepass
+**Fix Layout (sebelumnya):**
 - Invoice ID, Order ID, Reference: layout diubah dari samping-samping → label atas, value bawah
 - Tambah break-all supaya ID panjang wrap rapi di HP kecil
 - Font size disesuaikan untuk mobile
 - Berlaku untuk single transaction dan multi-checkout
+
+**Tombol Klaim Gamepass (baru):**
+- Tombol "Klaim Gamepass" muncul di atas tombol lain (paling menonjol), hanya jika: pembayaran berhasil (settlement) DAN serviceType === "gamepass"
+- Tidak muncul untuk: robux, joki, reseller, atau status pending/failed
+- Klik tombol → otomatis buat chat room order sesuai invoice ID → auto-invoice message terkirim → redirect ke /chat
+- Jika belum login: muncul toast "Silakan login terlebih dahulu untuk klaim gamepass kamu ya!" → delay 2 detik → redirect ke /login → setelah login redirect balik ke halaman transaction yang sama → klik Klaim Gamepass lagi
+- Import tambahan: MessageCircle, createChatRoom, useAuth
 
 ### 7. `components/footer/public-app-footer.tsx` — Copyright
 - © 2025 → © 2026
@@ -94,13 +106,24 @@ Update UI/tampilan website RBXNET. Semua perubahan hanya di sisi frontend (tampi
 
 ---
 
+### 8. `app/api/chat/rooms/route.ts` — Proteksi Chat Room
+**Order support:**
+- Cek apakah sudah ada chat room aktif untuk invoice yang sama
+- Kalau sudah ada → return room yang ada (tidak buat duplikat)
+- Kalau room lama sudah ditutup/dihapus → bisa buat room baru
+
+**General support:**
+- Maksimal 2 chat room aktif per user
+- Lebih dari 2 → error "Maksimal 2 ruang chat umum aktif. Tutup salah satu untuk membuat yang baru."
+- Room yang sudah closed/archived tidak dihitung
+
+---
+
 ## Yang TIDAK Diubah
-- Semua API routes (kecuali leaderboard tambah profilePicture)
 - Database models
 - Middleware / authentication / JWT
 - Checkout / payment (Midtrans, Duitku)
 - Cart system
-- Chat system (Pusher)
 - Admin dashboard
 - Halaman login / register
 - Halaman gamepass, rbx5, robux-instant, reseller, profile, track-order
@@ -108,10 +131,15 @@ Update UI/tampilan website RBXNET. Semua perubahan hanya di sisi frontend (tampi
 ---
 
 ## Catatan untuk Developer
-1. Semua perubahan hanya UI/tampilan, logic backend tidak disentuh
+1. Perubahan mencakup UI + fitur baru (Klaim Gamepass) + proteksi backend chat room
 2. Pastikan file .env sudah dikonfigurasi (INTERNAL_API_SECRET, MongoDB, dll) di production
 3. Banner default bisa diganti dari admin dashboard (database prioritas)
 4. Mascot files ada di /public/Maskot/ — pastikan ikut di-deploy
 5. BottomNav menggunakan useAuth() context — pastikan AuthContext tetap export useAuth hook
 6. Dropdown leaderboard pakai inline style (bukan Tailwind class) untuk kompatibilitas browser
 7. Halaman transaction/invoice sudah di-fix untuk mobile — test dengan transaksi real di production
+8. **Bug existing (bukan dari update ini, tapi perlu di-fix):**
+   - `app/(public)/layout.tsx` line 12: `React.FC` dipakai tapi `React` tidak di-import — tambahkan `import React from "react"`
+   - `app/page.tsx` line 469: `key={banner.id}` harusnya `key={banner._id}` — banner dari API pakai `_id`, bukan `id`
+   - `app/api/leaderboard/route.ts` line 130: `$addFields` rank pakai `$indexOfArray` yang invalid (tapi di-overwrite di line 140-143, jadi tidak crash)
+   - `app/api/leaderboard/route.ts` line 246-249: `now` di-mutate saat hitung week range, bisa salah hitung tanggal

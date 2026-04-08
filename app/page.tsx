@@ -688,7 +688,7 @@ export default function HomePage() {
                 href="https://www.youtube.com/watch?v=SemqFE2fcKY"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative bg-white/10 backdrop-blur-md text-white border-2 border-white/20 hover:border-red-500/60 px-10 py-5 rounded-2xl font-bold text-xl transition-all duration-500 transform hover:scale-105 hover:bg-red-500/10"
+                className="hidden md:block group relative bg-white/10 backdrop-blur-md text-white border-2 border-white/20 hover:border-red-500/60 px-10 py-5 rounded-2xl font-bold text-xl transition-all duration-500 transform hover:scale-105 hover:bg-red-500/10"
               >
                 <div className="flex items-center justify-center gap-3">
                   <PlayCircle className="w-6 h-6 text-red-400 group-hover:scale-110 transition-transform duration-300" />
@@ -697,7 +697,7 @@ export default function HomePage() {
               </a>
               <Link
                 href="/track-order"
-                className="group relative bg-white/10 backdrop-blur-md text-white border-2 border-white/20 hover:border-neon-purple/60 px-10 py-5 rounded-2xl font-bold text-xl transition-all duration-500 transform hover:scale-105 hover:bg-white/20"
+                className="hidden md:block group relative bg-white/10 backdrop-blur-md text-white border-2 border-white/20 hover:border-neon-purple/60 px-10 py-5 rounded-2xl font-bold text-xl transition-all duration-500 transform hover:scale-105 hover:bg-white/20"
               >
                 <div className="flex items-center justify-center gap-3">
                   <BookOpen className="w-6 h-6 group-hover:rotate-6 transition-transform duration-300" />
