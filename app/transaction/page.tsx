@@ -340,29 +340,29 @@ function TransactionResultContent() {
 
                     {/* Grand Total Section */}
                     <div className="pt-4 border-t-2 border-primary-100/30">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-primary-200 font-medium">
+                      <div className="mb-3">
+                        <span className="text-primary-200 font-medium text-sm">
                           Invoice ID:
                         </span>
-                        <span className="font-mono font-semibold text-primary-100 text-sm">
+                        <span className="block font-mono font-semibold text-primary-100 text-sm mt-1 break-all">
                           {transaction.invoiceId}
                         </span>
                       </div>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-primary-200 font-medium">
+                      <div className="mb-3">
+                        <span className="text-primary-200 font-medium text-sm">
                           Order ID:
                         </span>
-                        <span className="font-mono font-semibold text-primary-100 text-xs">
+                        <span className="block font-mono font-semibold text-primary-100 text-xs mt-1 break-all">
                           {transaction.midtransOrderId}
                         </span>
                       </div>
                       {/* Show Duitku Reference if available */}
                       {transaction.duitkuReference && (
-                        <div className="flex items-center justify-between mb-4">
-                          <span className="text-primary-200 font-medium">
+                        <div className="mb-4">
+                          <span className="text-primary-200 font-medium text-sm">
                             Reference:
                           </span>
-                          <span className="font-mono font-semibold text-primary-100 text-xs">
+                          <span className="block font-mono font-semibold text-primary-100 text-xs mt-1 break-all">
                             {transaction.duitkuReference}
                           </span>
                         </div>
@@ -385,48 +385,48 @@ function TransactionResultContent() {
                   </div>
                 ) : (
                   /* Single Transaction Info */
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="flex justify-between sm:col-span-2 py-3 border-b border-primary-100/20">
-                      <span className="text-primary-200 font-medium">
+                  <div className="space-y-4">
+                    <div className="py-3 border-b border-primary-100/20">
+                      <span className="text-primary-200 font-medium text-sm">
                         Invoice ID:
                       </span>
-                      <span className="font-mono font-semibold text-primary-100">
+                      <span className="block font-mono font-semibold text-primary-100 text-sm mt-1 break-all">
                         {transaction.invoiceId}
                       </span>
                     </div>
-                    <div className="flex justify-between sm:col-span-2 py-3 border-b border-primary-100/20">
-                      <span className="text-primary-200 font-medium">
+                    <div className="py-3 border-b border-primary-100/20">
+                      <span className="text-primary-200 font-medium text-sm">
                         Order ID:
                       </span>
-                      <span className="font-mono font-semibold text-primary-100 text-sm">
+                      <span className="block font-mono font-semibold text-primary-100 text-xs mt-1 break-all">
                         {transaction.midtransOrderId}
                       </span>
                     </div>
                     {/* Show Duitku Reference if available */}
                     {transaction.duitkuReference && (
-                      <div className="flex justify-between sm:col-span-2 py-3 border-b border-primary-100/20">
-                        <span className="text-primary-200 font-medium">
+                      <div className="py-3 border-b border-primary-100/20">
+                        <span className="text-primary-200 font-medium text-sm">
                           Reference:
                         </span>
-                        <span className="font-mono font-semibold text-primary-100 text-sm">
+                        <span className="block font-mono font-semibold text-primary-100 text-xs mt-1 break-all">
                           {transaction.duitkuReference}
                         </span>
                       </div>
                     )}
-                    <div className="flex justify-between sm:col-span-2 py-3 border-b border-primary-100/20">
-                      <span className="text-primary-200 font-medium flex items-center gap-2">
+                    <div className="flex justify-between py-3 border-b border-primary-100/20">
+                      <span className="text-primary-200 font-medium flex items-center gap-2 text-sm">
                         <Package className="w-4 h-4" />
                         Layanan:
                       </span>
-                      <span className="font-semibold text-white text-right max-w-[200px] truncate">
+                      <span className="font-semibold text-white text-right max-w-[200px] truncate text-sm">
                         {transaction.serviceName}
                       </span>
                     </div>
-                    <div className="flex justify-between sm:col-span-2 py-3 border-t-2 border-primary-100/30 mt-2">
-                      <span className="text-lg font-bold text-white">
+                    <div className="flex justify-between py-3 border-t-2 border-primary-100/30 mt-2">
+                      <span className="text-base sm:text-lg font-bold text-white">
                         Total Pembayaran:
                       </span>
-                      <span className="text-xl font-bold text-primary-100">
+                      <span className="text-lg sm:text-xl font-bold text-primary-100">
                         Rp {transaction.finalAmount.toLocaleString("id-ID")}
                       </span>
                     </div>

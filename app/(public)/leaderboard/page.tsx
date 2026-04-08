@@ -267,9 +267,9 @@ export default function LeaderboardPage() {
                 }}
                 className="px-3.5 py-2 bg-bg-secondary/60 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:border-primary-100/50 transition-all"
               >
-                <option value="all" className="bg-bg-primary text-white">Semua Waktu</option>
-                <option value="month" className="bg-bg-primary text-white">Per Bulan</option>
-                <option value="year" className="bg-bg-primary text-white">Per Tahun</option>
+                <option value="all" style={{ backgroundColor: "#22102A", color: "white" }}>Semua Waktu</option>
+                <option value="month" style={{ backgroundColor: "#22102A", color: "white" }}>Per Bulan</option>
+                <option value="year" style={{ backgroundColor: "#22102A", color: "white" }}>Per Tahun</option>
               </select>
 
               {filterType === "month" && (
@@ -279,9 +279,9 @@ export default function LeaderboardPage() {
                     onChange={(e) => setSelectedMonth(e.target.value)}
                     className="px-3.5 py-2 bg-bg-secondary/60 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:border-primary-100/50 transition-all"
                   >
-                    <option value="" className="bg-bg-primary text-white">Bulan</option>
+                    <option value="" style={{ backgroundColor: "#22102A", color: "white" }}>Bulan</option>
                     {months.map((month) => (
-                      <option key={month.value} value={month.value} className="bg-bg-primary text-white">
+                      <option key={month.value} value={month.value} style={{ backgroundColor: "#22102A", color: "white" }}>
                         {month.label}
                       </option>
                     ))}
@@ -291,9 +291,9 @@ export default function LeaderboardPage() {
                     onChange={(e) => setSelectedYear(e.target.value)}
                     className="px-3.5 py-2 bg-bg-secondary/60 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:border-primary-100/50 transition-all"
                   >
-                    <option value="" className="bg-bg-primary text-white">Tahun</option>
+                    <option value="" style={{ backgroundColor: "#22102A", color: "white" }}>Tahun</option>
                     {years.map((year) => (
-                      <option key={year} value={year.toString()} className="bg-bg-primary text-white">
+                      <option key={year} value={year.toString()} style={{ backgroundColor: "#22102A", color: "white" }}>
                         {year}
                       </option>
                     ))}
@@ -307,9 +307,9 @@ export default function LeaderboardPage() {
                   onChange={(e) => setSelectedYear(e.target.value)}
                   className="px-3.5 py-2 bg-bg-secondary/60 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:border-primary-100/50 transition-all"
                 >
-                  <option value="" className="bg-bg-primary text-white">Tahun</option>
+                  <option value="" style={{ backgroundColor: "#22102A", color: "white" }}>Tahun</option>
                   {years.map((year) => (
-                    <option key={year} value={year.toString()} className="bg-bg-primary text-white">
+                    <option key={year} value={year.toString()} style={{ backgroundColor: "#22102A", color: "white" }}>
                       {year}
                     </option>
                   ))}

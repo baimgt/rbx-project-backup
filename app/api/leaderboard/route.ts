@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import Transaction from "@/models/Transaction";
-import User from "@/models/User";
-import Role from "@/models/Role";
 import { requireApiKey } from "@/lib/auth";
 
 export async function GET(request: NextRequest) {

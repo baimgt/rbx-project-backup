@@ -18,6 +18,7 @@ import {
 } from "@/app/lib/actions";
 import {
   Gem,
+  Clock,
   Rocket,
   Users,
   Star,
@@ -26,6 +27,7 @@ import {
   CheckCircle,
   Zap,
   BookOpen,
+  PlayCircle,
   Gamepad2,
   HelpCircle,
   ChevronDown,
@@ -253,22 +255,13 @@ export default function HomePage() {
   const fetchActiveBanners = async () => {
     const defaultBanners = [
       {
-        id: 1,
-        imageUrl: "/banner.webp",
+        _id: "1",
+        id: "1",
+        imageUrl: "/Banner/Tak berjudul40_20251112150853.png",
         link: "/gamepass",
-        alt: "Banner Gamepass Terbaru",
-      },
-      {
-        id: 2,
-        imageUrl: "/banner2.png",
-        link: "/rbx5",
-        alt: "Banner RBX Promo",
-      },
-      {
-        id: 3,
-        imageUrl: "/banner.png",
-        link: "/joki",
-        alt: "Banner Joki Service",
+        alt: "Banner Gift Gamepass RBXNET",
+        isActive: true,
+        order: 1,
       },
     ];
     try {
@@ -276,11 +269,9 @@ export default function HomePage() {
       if (data.success && data.data && data.data.length > 0) {
         setBanners(data.data);
       } else {
-        // Use default banners if no active banners from database
         setBanners(defaultBanners);
       }
     } catch (error) {
-      // Use default banners on error
       setBanners(defaultBanners);
     } finally {
       setLoadingBanners(false);
@@ -407,14 +398,11 @@ export default function HomePage() {
   return (
     <PublicLayout>
       {/* Banner Carousel Section */}
-      <section className="relative w-full full aspect-[16/4] lg:aspect-auto lg:h-60 overflow-hidden">
+      {banners.length > 0 && (
+      <section className="relative w-full aspect-[16/4] lg:aspect-auto lg:h-60 overflow-hidden">
         {loadingBanners ? (
           <div className="w-full h-full flex items-center justify-center bg-gray-800/50">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-neon-pink"></div>
-          </div>
-        ) : banners.length === 0 ? (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-neon-purple/20 to-neon-pink/20">
-            <p className="text-white/60">Tidak ada banner tersedia</p>
           </div>
         ) : (
           <div className="relative w-full h-full">
@@ -552,6 +540,101 @@ export default function HomePage() {
           </div>
         )}
       </section>
+      )}
+
+      {/* ============ MOBILE HERO ============ */}
+      <section className="md:hidden relative pb-4 overflow-hidden z-0">
+        <div className="px-4 pt-3">
+          {/* Welcome - mascot left, text right */}
+          <div className="flex items-center gap-4 mb-5">
+            <Image
+              src="/Maskot/mascot-pointing.png"
+              alt="Mascot"
+              width={90}
+              height={90}
+              className="object-contain flex-shrink-0 drop-shadow-[0_8px_20px_rgba(246,58,230,0.25)]"
+            />
+            <div>
+              <h1 className="text-2xl font-extrabold text-white leading-tight">
+                Selamat Datang di{" "}
+                <span className="text-primary-100">RBXNET</span>
+              </h1>
+              <p className="text-white/50 text-xs mt-1">
+                Tempat Top Up RBX dan Gamepass terpercaya!
+              </p>
+            </div>
+          </div>
+
+          {/* Product Grid */}
+          <div className="bg-white/[0.04] border border-white/10 rounded-2xl p-4 mb-4">
+            <h2 className="text-base font-bold text-white mb-1">
+              Semua Produk <span className="text-primary-100">yang Tersedia</span>
+            </h2>
+            <p className="text-white/40 text-[10px] mb-4">
+              Cari segala kebutuhanmu! Proses Kilat!
+            </p>
+
+            <div className="grid grid-cols-2 gap-2.5">
+              <Link href="/rbx5" className="flex items-center gap-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl px-3 py-3 hover:bg-white/[0.08] hover:border-primary-100/30 transition-all">
+                <div className="w-9 h-9 rounded-lg bg-primary-100/15 flex items-center justify-center flex-shrink-0">
+                  <Clock className="w-5 h-5 text-primary-100" />
+                </div>
+                <span className="text-white text-xs font-semibold">RBX 5 Hari</span>
+              </Link>
+
+              <Link href="/robux-instant" className="flex items-center gap-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl px-3 py-3 hover:bg-white/[0.08] hover:border-primary-100/30 transition-all">
+                <div className="w-9 h-9 rounded-lg bg-amber-400/15 flex items-center justify-center flex-shrink-0">
+                  <Zap className="w-5 h-5 text-amber-400" />
+                </div>
+                <span className="text-white text-xs font-semibold">RBX Via Login</span>
+              </Link>
+
+              <Link href="/gamepass" className="flex items-center gap-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl px-3 py-3 hover:bg-white/[0.08] hover:border-primary-100/30 transition-all">
+                <div className="w-9 h-9 rounded-lg bg-neon-pink/15 flex items-center justify-center flex-shrink-0">
+                  <Gamepad2 className="w-5 h-5 text-neon-pink" />
+                </div>
+                <span className="text-white text-xs font-semibold">Gamepass</span>
+              </Link>
+
+              <a href="https://www.youtube.com/watch?v=SemqFE2fcKY" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl px-3 py-3 hover:bg-white/[0.08] hover:border-red-400/30 transition-all">
+                <div className="w-9 h-9 rounded-lg bg-red-400/15 flex items-center justify-center flex-shrink-0">
+                  <PlayCircle className="w-5 h-5 text-red-400" />
+                </div>
+                <span className="text-white text-xs font-semibold">Panduan</span>
+              </a>
+            </div>
+
+            <div className="mt-2.5">
+              <Link href="/track-order" className="flex items-center justify-center gap-2 bg-white/[0.04] border border-white/[0.08] rounded-xl px-3 py-3 hover:bg-white/[0.08] hover:border-primary-100/30 transition-all">
+                <div className="w-9 h-9 rounded-lg bg-neon-purple/15 flex items-center justify-center flex-shrink-0">
+                  <BookOpen className="w-5 h-5 text-neon-purple" />
+                </div>
+                <span className="text-white text-xs font-semibold">Lacak Pesanan</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Mini Stats */}
+          <div className="grid grid-cols-4 gap-2">
+            <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-2.5 text-center">
+              <div className="text-sm font-bold text-white">{rbx5Stats.totalStok.toLocaleString()}</div>
+              <div className="text-[9px] text-white/40">R$ Tersedia</div>
+            </div>
+            <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-2.5 text-center">
+              <div className="text-sm font-bold text-white">{rbx5Stats.totalTerjual.toLocaleString()}</div>
+              <div className="text-[9px] text-white/40">R$ Terjual</div>
+            </div>
+            <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-2.5 text-center">
+              <div className="text-sm font-bold text-white">{loadingStats ? "..." : formatNumber(rbx5Stats.totalOrder)}+</div>
+              <div className="text-[9px] text-white/40">Customers</div>
+            </div>
+            <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-2.5 text-center">
+              <div className="text-sm font-bold text-white">99.9%</div>
+              <div className="text-[9px] text-white/40">Success</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Hero Section - Enhanced Modern Design */}
       <section className="relative pb-12 lg:pb-16 overflow-hidden z-0">
@@ -601,6 +684,17 @@ export default function HomePage() {
                   Beli RBX Sekarang
                 </div>
               </Link>
+              <a
+                href="https://www.youtube.com/watch?v=SemqFE2fcKY"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative bg-white/10 backdrop-blur-md text-white border-2 border-white/20 hover:border-red-500/60 px-10 py-5 rounded-2xl font-bold text-xl transition-all duration-500 transform hover:scale-105 hover:bg-red-500/10"
+              >
+                <div className="flex items-center justify-center gap-3">
+                  <PlayCircle className="w-6 h-6 text-red-400 group-hover:scale-110 transition-transform duration-300" />
+                  Panduan
+                </div>
+              </a>
               <Link
                 href="/track-order"
                 className="group relative bg-white/10 backdrop-blur-md text-white border-2 border-white/20 hover:border-neon-purple/60 px-10 py-5 rounded-2xl font-bold text-xl transition-all duration-500 transform hover:scale-105 hover:bg-white/20"
@@ -613,7 +707,7 @@ export default function HomePage() {
             </div>
 
             {/* Premium Stats Cards */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
               <div className="group relative bg-gradient-to-br from-primary-100/10 via-transparent to-primary-100/5 backdrop-blur-xl border border-primary-100/60 rounded-3xl p-8 text-center transition-all duration-700 hover:-translate-y-4 hover:shadow-2xl hover:shadow-primary-100/20 hover:border-primary-100/40">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-100/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative">
