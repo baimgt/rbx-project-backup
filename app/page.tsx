@@ -18,7 +18,6 @@ import {
 } from "@/app/lib/actions";
 import {
   Gem,
-  Clock,
   Rocket,
   Users,
   Star,
@@ -40,6 +39,7 @@ interface RBX5Stats {
   totalOrder: number;
   totalTerjual: number;
   hargaPer100Robux: number;
+  unlimitedStock?: boolean;
 }
 
 interface Gamepass {
@@ -107,9 +107,6 @@ export default function HomePage() {
 
   // Helper function to format numbers with "k" suffix
   const formatNumber = (num: number): string => {
-    if (num >= 10000) {
-      return `${(num / 1000).toFixed(1)}k`;
-    }
     return num.toLocaleString();
   };
 
@@ -257,7 +254,7 @@ export default function HomePage() {
       {
         _id: "1",
         id: "1",
-        imageUrl: "/Banner/Tak berjudul40_20251112150853.png",
+        imageUrl: "/Banner/Tak berjudul40_20251112150853.webp",
         link: "/gamepass",
         alt: "Banner Gift Gamepass RBXNET",
         isActive: true,
@@ -548,7 +545,7 @@ export default function HomePage() {
           {/* Welcome - mascot left, text right */}
           <div className="flex items-center gap-4 mb-5">
             <Image
-              src="/Maskot/mascot-pointing.png"
+              src="/Maskot/mascot-pointing.webp"
               alt="Mascot"
               width={90}
               height={90}
@@ -576,29 +573,29 @@ export default function HomePage() {
 
             <div className="grid grid-cols-2 gap-2.5">
               <Link href="/rbx5" className="flex items-center gap-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl px-3 py-3 hover:bg-white/[0.08] hover:border-primary-100/30 transition-all">
-                <div className="w-9 h-9 rounded-lg bg-primary-100/15 flex items-center justify-center flex-shrink-0">
-                  <Clock className="w-5 h-5 text-primary-100" />
+                <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Image src="/icon/icons8-robux-48 (2).png" alt="Robux" width={32} height={32} />
                 </div>
                 <span className="text-white text-xs font-semibold">RBX 5 Hari</span>
               </Link>
 
               <Link href="/robux-instant" className="flex items-center gap-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl px-3 py-3 hover:bg-white/[0.08] hover:border-primary-100/30 transition-all">
-                <div className="w-9 h-9 rounded-lg bg-amber-400/15 flex items-center justify-center flex-shrink-0">
-                  <Zap className="w-5 h-5 text-amber-400" />
+                <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Image src="/icon/roblox-premium-pink.png" alt="RBX Via Login" width={32} height={32} />
                 </div>
                 <span className="text-white text-xs font-semibold">RBX Via Login</span>
               </Link>
 
               <Link href="/gamepass" className="flex items-center gap-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl px-3 py-3 hover:bg-white/[0.08] hover:border-primary-100/30 transition-all">
-                <div className="w-9 h-9 rounded-lg bg-neon-pink/15 flex items-center justify-center flex-shrink-0">
-                  <Gamepad2 className="w-5 h-5 text-neon-pink" />
+                <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Image src="/icon/gamepass-gift.webp" alt="Gamepass" width={32} height={32} />
                 </div>
-                <span className="text-white text-xs font-semibold">Gamepass</span>
+                <span className="text-white text-xs font-semibold">RBLX Gamepass</span>
               </Link>
 
               <a href="https://www.youtube.com/watch?v=SemqFE2fcKY" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl px-3 py-3 hover:bg-white/[0.08] hover:border-red-400/30 transition-all">
-                <div className="w-9 h-9 rounded-lg bg-red-400/15 flex items-center justify-center flex-shrink-0">
-                  <PlayCircle className="w-5 h-5 text-red-400" />
+                <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <BookOpen className="w-7 h-7 text-purple-400" />
                 </div>
                 <span className="text-white text-xs font-semibold">Panduan</span>
               </a>
@@ -615,22 +612,22 @@ export default function HomePage() {
           </div>
 
           {/* Mini Stats */}
-          <div className="grid grid-cols-4 gap-2">
-            <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-2.5 text-center">
-              <div className="text-sm font-bold text-white">{rbx5Stats.totalStok.toLocaleString()}</div>
-              <div className="text-[9px] text-white/40">R$ Tersedia</div>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-3 text-center">
+              <div className="text-lg font-black text-primary-100">{rbx5Stats.unlimitedStock ? "Unlimited" : `${formatNumber(rbx5Stats.totalStok)} RBX`}</div>
+              <div className="text-[10px] text-white/40">Stock RBX</div>
             </div>
-            <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-2.5 text-center">
-              <div className="text-sm font-bold text-white">{rbx5Stats.totalTerjual.toLocaleString()}</div>
-              <div className="text-[9px] text-white/40">R$ Terjual</div>
+            <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-3 text-center">
+              <div className="text-lg font-black text-primary-100">{formatNumber(rbx5Stats.totalTerjual)} RBX</div>
+              <div className="text-[10px] text-white/40">RBX Terjual</div>
             </div>
-            <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-2.5 text-center">
-              <div className="text-sm font-bold text-white">{loadingStats ? "..." : formatNumber(rbx5Stats.totalOrder)}+</div>
-              <div className="text-[9px] text-white/40">Customers</div>
+            <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-3 text-center">
+              <div className="text-lg font-black text-primary-100">{loadingStats ? "..." : formatNumber(rbx5Stats.totalOrder)}</div>
+              <div className="text-[10px] text-white/40">Total Order</div>
             </div>
-            <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-2.5 text-center">
-              <div className="text-sm font-bold text-white">99.9%</div>
-              <div className="text-[9px] text-white/40">Success</div>
+            <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-3 text-center">
+              <div className="text-lg font-black text-primary-100">99.9%</div>
+              <div className="text-[10px] text-white/40">Success Rate</div>
             </div>
           </div>
         </div>
@@ -691,7 +688,7 @@ export default function HomePage() {
                 className="hidden md:block group relative bg-white/10 backdrop-blur-md text-white border-2 border-white/20 hover:border-red-500/60 px-10 py-5 rounded-2xl font-bold text-xl transition-all duration-500 transform hover:scale-105 hover:bg-red-500/10"
               >
                 <div className="flex items-center justify-center gap-3">
-                  <PlayCircle className="w-6 h-6 text-red-400 group-hover:scale-110 transition-transform duration-300" />
+                  <PlayCircle className="w-6 h-6 text-primary-100 group-hover:scale-110 transition-transform duration-300" />
                   Panduan
                 </div>
               </a>
@@ -707,64 +704,37 @@ export default function HomePage() {
             </div>
 
             {/* Premium Stats Cards */}
-            <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-              <div className="group relative bg-gradient-to-br from-primary-100/10 via-transparent to-primary-100/5 backdrop-blur-xl border border-primary-100/60 rounded-3xl p-8 text-center transition-all duration-700 hover:-translate-y-4 hover:shadow-2xl hover:shadow-primary-100/20 hover:border-primary-100/40">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-100/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="relative">
-                  <div className="w-16 h-16 bg-gradient-to-br from-primary-100/20 to-primary-100/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
-                    <Gem className="text-white w-8 h-8" />
-                  </div>
-                  <div className="text-3xl font-black text-white mb-2 group-hover:text-neon-pink transition-colors duration-300">
-                    {rbx5Stats.totalStok.toLocaleString()}
-                  </div>
-                  <div className="text-white/70 text-sm font-medium">
-                    R$ Tersedia
-                  </div>
+            <div className="hidden md:block max-w-6xl mx-auto space-y-4">
+              {/* RBX Terjual - Hero Card */}
+              <div className="bg-gradient-to-r from-primary-100/20 to-primary-200/20 border border-primary-100/40 rounded-2xl p-8 lg:p-10 text-center">
+                <div className="text-white/70 text-sm font-medium mb-2">RBX Terjual di RBXNET</div>
+                <div className="text-4xl lg:text-5xl xl:text-6xl font-black text-primary-100">
+                  {formatNumber(rbx5Stats.totalTerjual)}
                 </div>
               </div>
 
-              <div className="group relative bg-gradient-to-br from-primary-100/10 via-transparent to-primary-100/5 backdrop-blur-xl border border-primary-100/60 rounded-3xl p-8 text-center transition-all duration-700 hover:-translate-y-4 hover:shadow-2xl hover:shadow-primary-100/20 hover:border-primary-100/40">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-100/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="relative">
-                  <div className="w-16 h-16 bg-gradient-to-br from-primary-100/20 to-primary-100/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
-                    <Rocket className="text-white w-8 h-8" />
-                  </div>
-                  <div className="text-3xl font-black text-white mb-2 group-hover:text-neon-pink transition-colors duration-300">
-                    {rbx5Stats.totalTerjual.toLocaleString()}
-                  </div>
-                  <div className="text-white/70 text-sm font-medium">
-                    R$ Terjual
-                  </div>
+              {/* Total Order - Medium Card */}
+              <div className="bg-white/[0.04] border border-primary-100/30 rounded-2xl p-6 lg:p-8 text-center transition-all duration-300 hover:border-primary-100/60">
+                <div className="text-white/70 text-sm font-medium mb-2">Total Order RBXNET</div>
+                <div className="text-3xl lg:text-4xl xl:text-5xl font-black text-primary-100">
+                  {loadingStats ? "..." : formatNumber(rbx5Stats.totalOrder)}
                 </div>
               </div>
 
-              <div className="group relative bg-gradient-to-br from-primary-100/10 via-transparent to-primary-100/5 backdrop-blur-xl border border-primary-100/60 rounded-3xl p-8 text-center transition-all duration-700 hover:-translate-y-4 hover:shadow-2xl hover:shadow-primary-100/20 hover:border-primary-100/40">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-100/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="relative">
-                  <div className="w-16 h-16 bg-gradient-to-br from-primary-100/20 to-primary-100/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
-                    <Users className="text-white w-8 h-8" />
+              {/* Stock & Success Rate */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-white/[0.04] border border-primary-100/30 rounded-2xl p-5 lg:p-6 text-center transition-all duration-300 hover:border-primary-100/60 overflow-hidden">
+                  <div className="text-2xl lg:text-3xl font-black text-primary-100 mb-1">
+                    {rbx5Stats.unlimitedStock ? "Unlimited" : `${formatNumber(rbx5Stats.totalStok)} RBX`}
                   </div>
-                  <div className="text-3xl font-black text-white mb-2 group-hover:text-neon-pink transition-colors duration-300">
-                    {loadingStats ? "..." : formatNumber(rbx5Stats.totalOrder)}+
-                  </div>
-                  <div className="text-white/70 text-sm font-medium">
-                    Customers
-                  </div>
+                  <div className="text-white/50 text-sm font-medium">Stock RBX</div>
                 </div>
-              </div>
 
-              <div className="group relative bg-gradient-to-br from-primary-100/10 via-transparent to-primary-100/5 backdrop-blur-xl border border-primary-100/60 rounded-3xl p-8 text-center transition-all duration-700 hover:-translate-y-4 hover:shadow-2xl hover:shadow-primary-100/20 hover:border-primary-100/40">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-100/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="relative">
-                  <div className="w-16 h-16 bg-gradient-to-br from-primary-100/20 to-primary-100/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
-                    <Star className="text-white w-8 h-8" />
-                  </div>
-                  <div className="text-3xl font-black text-white mb-2 group-hover:text-neon-pink transition-colors duration-300">
+                <div className="bg-white/[0.04] border border-primary-100/30 rounded-2xl p-5 lg:p-6 text-center transition-all duration-300 hover:border-primary-100/60 overflow-hidden">
+                  <div className="text-2xl lg:text-3xl font-black text-primary-100 mb-1">
                     99.9%
                   </div>
-                  <div className="text-white/70 text-sm font-medium">
-                    Success Rate
-                  </div>
+                  <div className="text-white/50 text-sm font-medium">Success Rate</div>
                 </div>
               </div>
             </div>
@@ -772,7 +742,7 @@ export default function HomePage() {
             {/* Real-time Transaction Ticker - Neon Theme */}
             <div className="mt-10 max-w-6xl mx-auto">
               <div className="neon-card rounded-xl p-6 overflow-hidden relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-neon-pink/5 to-transparent animate-pulse"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-neon-pink/5 to-transparent"></div>
                 <div className="relative">
                   <div className="flex items-center justify-center mb-6">
                     <div className="w-3 h-3 bg-neon-pink rounded-full animate-pulse mr-3"></div>
@@ -922,9 +892,6 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Floating Elements - Neon Theme */}
-        <div className="absolute top-20 left-10 w-20 h-20 bg-neon-pink/20 rounded-full blur-xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-32 h-32 bg-neon-purple/20 rounded-full blur-xl animate-pulse"></div>
       </section>
 
       {/* Premium Products Section */}
@@ -1005,7 +972,7 @@ export default function HomePage() {
                   />
 
                   <div className="absolute right-6 top-1/2 transform -translate-y-1/2 text-neon-pink font-bold text-lg">
-                    R$
+                    RBX
                   </div>
                   <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-neon-pink/5 to-neon-purple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
@@ -1067,7 +1034,7 @@ export default function HomePage() {
               {robuxAmount > 0 && (
                 <div className="mt-6 flex items-center justify-center gap-2 text-white/80">
                   <div className="flex items-center gap-2 px-4 py-2 bg-neon-purple/10 border border-neon-purple/30 rounded-full">
-                    <Zap className="w-4 h-4 text-neon-purple animate-pulse" />
+                    <Zap className="w-4 h-4 text-neon-purple" />
                     <span className="text-sm font-medium">
                       Pengiriman dalam 5 hari kerja
                     </span>
@@ -1096,7 +1063,7 @@ export default function HomePage() {
                 <div className="text-lg font-bold text-white">
                   {loadingStats
                     ? "..."
-                    : `${rbx5Stats.totalStok.toLocaleString()} R$`}
+                    : rbx5Stats.unlimitedStock ? "Unlimited Stock" : `${formatNumber(rbx5Stats.totalStok)} RBX`}
                 </div>
               </div>
 
@@ -1118,7 +1085,7 @@ export default function HomePage() {
                 <div className="text-lg font-bold text-white">
                   {loadingStats
                     ? "..."
-                    : `${rbx5Stats.totalTerjual.toLocaleString()} R$`}
+                    : `${formatNumber(rbx5Stats.totalTerjual)} RBX`}
                 </div>
               </div>
 
@@ -1164,7 +1131,7 @@ export default function HomePage() {
                     <>
                       Rp.{rbx5Stats.hargaPer100Robux.toLocaleString()}{" "}
                       <span className="text-xs font-medium text-primary-300">
-                        / 100R$
+                        / 100 RBX
                       </span>
                     </>
                   )}
@@ -1497,15 +1464,15 @@ export default function HomePage() {
                 {/* Trust indicators */}
                 <div className="flex items-center justify-center lg:justify-start gap-8 mt-8 text-sm text-white/60">
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-neon-pink rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-neon-pink rounded-full"></div>
                     Proses Instan
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-neon-purple rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-neon-purple rounded-full"></div>
                     Aman & Terpercaya
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-neon-pink rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-neon-pink rounded-full"></div>
                     Support 24/7
                   </div>
                 </div>
@@ -1515,7 +1482,7 @@ export default function HomePage() {
               <div className="order-1 lg:order-2">
                 <div className="relative">
                   <Image
-                    src="/char3.png"
+                    src="/char3.webp"
                     alt="RBXNET Character"
                     width={500}
                     height={400}
@@ -1703,7 +1670,7 @@ export default function HomePage() {
             <div className="relative">
               <div className="neon-card rounded-3xl p-8 relative overflow-hidden">
                 <Image
-                  src="/char4.png"
+                  src="/char4.webp"
                   alt="Support Character"
                   width={400}
                   height={400}
@@ -2058,15 +2025,15 @@ export default function HomePage() {
                 {/* Trust indicators */}
                 <div className="flex items-center justify-center gap-8 mt-8 text-sm text-white/60">
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-primary-100 rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-primary-100 rounded-full"></div>
                     Response Cepat
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-primary-200 rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-primary-200 rounded-full"></div>
                     Support 24/7
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-primary-100 rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-primary-100 rounded-full"></div>
                     Solusi Terpercaya
                   </div>
                 </div>

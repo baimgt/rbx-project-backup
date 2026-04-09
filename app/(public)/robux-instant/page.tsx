@@ -257,7 +257,7 @@ const RobuxInstan: React.FC = () => {
       <div className="max-w-6xl mx-auto px-2">
         <div className="w-full h-[200px] sm:h-[250px] md:h-[300px] relative rounded-lg overflow-hidden group">
           <Image
-            src="/rbx_instant.png"
+            src="/rbx_instant.webp"
             alt="banner"
             fill
             className="object-cover transform transition-transform duration-700 group-hover:scale-110"
@@ -821,7 +821,7 @@ const RobuxInstan: React.FC = () => {
                       <div className="flex items-center gap-2 text-white/80 text-xs mb-2 justify-center">
                         <Gem className="w-4 h-4 text-primary-100" />
                         <span className="text-white font-medium">
-                          {product.robuxAmount} R$
+                          {product.robuxAmount} RBX
                         </span>
                       </div>
 

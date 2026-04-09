@@ -66,6 +66,7 @@ interface RBX5Stats {
   totalOrder: number;
   totalTerjual: number;
   hargaPer100Robux: number;
+  unlimitedStock?: boolean;
 }
 
 interface SiteSettings {
@@ -671,16 +672,13 @@ export default function Rbx5Page() {
             <div className="text-center mb-8">
               {/* Premium Badge */}
               <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary-100/20 to-primary-200/20 border border-primary-100/40 rounded-2xl text-sm text-white/80 font-semibold mb-8 backdrop-blur-sm shadow-lg hover:shadow-primary-100/20 transition-all duration-300">
-                <div className="flex items-center mr-2">
-                  {/* <span className="w-2 h-2 bg-primary-100 rounded-full animate-pulse mr-2"></span> */}
-                  <DollarSign className="w-4 h-4" />
-                </div>
                 RBX Premium - GamePass Official
               </div>
 
               {/* Enhanced Main Heading */}
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-6 leading-[0.9] tracking-tight">
-                RBX <span className="text-primary-100">5 Hari</span>{" "}
+                RBX <span className="text-primary-100">5 Hari</span>
+                <div className="text-primary-100/70 text-sm font-semibold tracking-widest uppercase mt-2">Pre-Order</div>
               </h1>
 
               {/* Enhanced Description */}
@@ -725,7 +723,7 @@ export default function Rbx5Page() {
                       <div className="animate-pulse bg-gray-300 h-4 w-16 rounded"></div>
                     </div>
                   ) : (
-                    `${stats.totalStok.toLocaleString()} R$`
+                    stats.unlimitedStock ? "Unlimited Stock" : `${stats.totalStok.toLocaleString()} RBX`
                   ),
                   img: "/stok.png",
                 },
@@ -747,7 +745,7 @@ export default function Rbx5Page() {
                       <div className="animate-pulse bg-gray-300 h-4 w-16 rounded"></div>
                     </div>
                   ) : (
-                    `${stats.totalTerjual.toLocaleString()} R$`
+                    `${stats.totalTerjual.toLocaleString()} RBX`
                   ),
                   img: "/terjual.png",
                 },
@@ -758,7 +756,7 @@ export default function Rbx5Page() {
                       <div className="animate-pulse bg-gray-300 h-4 w-20 rounded"></div>
                     </div>
                   ) : (
-                    `Rp.${stats.hargaPer100Robux.toLocaleString()} / 100 R$`
+                    `Rp.${stats.hargaPer100Robux.toLocaleString()} / 100 RBX`
                   ),
                   img: "/harga.png",
                 },
@@ -867,7 +865,7 @@ export default function Rbx5Page() {
                           : "text-white "
                       }`}
                     >
-                      {product.robuxAmount.toLocaleString()} R$
+                      {product.robuxAmount.toLocaleString()} RBX
                     </div>
 
                     <div
@@ -940,7 +938,7 @@ export default function Rbx5Page() {
                   <div className="bg-gradient-to-r from-primary-100/95 to-primary-200/95 backdrop-blur-sm text-white text-sm font-bold px-4 py-2 rounded-xl shadow-xl border border-primary-100/40 whitespace-nowrap">
                     <div className="flex items-center gap-1">
                       <Gem className="w-4 h-4" />
-                      {robux.toLocaleString()} R$
+                      {robux.toLocaleString()} RBX
                     </div>
                     {/* Arrow pointing up to slider */}
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-primary-100/95"></div>
@@ -1043,7 +1041,7 @@ export default function Rbx5Page() {
                   <div className="relative flex rounded-xl overflow-hidden backdrop-blur-xl border border-primary-200/40 group-focus-within:border-primary-100/60 transition-all duration-300">
                     <div className="bg-gradient-to-r from-primary-100/30 to-primary-200/20 text-white font-bold text-sm px-5 py-4 flex items-center justify-center border-r border-primary-200/30">
                       <span className="bg-gradient-to-r from-primary-100 to-primary-200 bg-clip-text text-transparent font-extrabold">
-                        R$
+                        RBX
                       </span>
                     </div>
                     <input
@@ -1080,7 +1078,7 @@ export default function Rbx5Page() {
                 <div className="flex items-center gap-2 mt-3">
                   <div className="w-1 h-1 bg-primary-200 rounded-full animate-pulse"></div>
                   <p className="text-xs text-white/70">
-                    Masukan jumlah RBX yang diinginkan (minimum 25 R$)
+                    Masukan jumlah RBX yang diinginkan (minimum 25 RBX)
                   </p>
                 </div>
               </div>
@@ -1137,7 +1135,7 @@ export default function Rbx5Page() {
                   <span className="text-white font-medium">
                     Kamu akan mendapat{" "}
                     <span className="text-primary-100 font-bold">
-                      {robux.toLocaleString()} R$
+                      {robux.toLocaleString()} RBX
                     </span>{" "}
                     dengan harga{" "}
                     <span className="text-primary-200 font-bold">
@@ -1398,7 +1396,7 @@ export default function Rbx5Page() {
                       <Gamepad2 className="w-5 h-5" />
                       <span>
                         Buat GamePass ({getGamepassAmount().toLocaleString()}{" "}
-                        R$)
+                        RBX)
                       </span>
                     </button>
                   )}
@@ -1693,11 +1691,11 @@ export default function Rbx5Page() {
                 <div className="flex items-center justify-center gap-2 mb-1">
                   <Gem className="w-5 h-5 text-primary-100" />
                   <div className="text-2xl font-black bg-gradient-to-r from-primary-100 to-primary-200 bg-clip-text text-transparent">
-                    {getGamepassAmount().toLocaleString()} R$
+                    {getGamepassAmount().toLocaleString()} RBX
                   </div>
                 </div>
                 <div className="bg-gradient-to-r from-primary-600/30 to-primary-700/20 rounded-lg px-2 py-1 text-xs text-white/80 inline-block">
-                  {robux.toLocaleString()} R$
+                  {robux.toLocaleString()} RBX
                 </div>
               </div>
 
@@ -1744,7 +1742,7 @@ export default function Rbx5Page() {
                         <span>
                           Create → Game Pass → set harga{" "}
                           <span className="text-primary-100 font-bold">
-                            {getGamepassAmount().toLocaleString()} R$
+                            {getGamepassAmount().toLocaleString()} RBX
                           </span>
                         </span>
                       ),

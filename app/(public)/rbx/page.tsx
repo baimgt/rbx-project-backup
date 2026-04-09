@@ -82,7 +82,7 @@ export default function RBXLandingPage() {
       },
       {
         _id: "2",
-        imageUrl: "/banner2.png",
+        imageUrl: "/banner2.webp",
         link: "/rbx5",
         alt: "Banner RBX Promo",
         isActive: true,
@@ -182,7 +182,7 @@ export default function RBXLandingPage() {
             >
               <div className="relative w-24 h-24 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52">
                 <Image
-                  src="/Maskot/mascot-pointing.png"
+                  src="/Maskot/mascot-pointing.webp"
                   alt="Mascot"
                   fill
                   className="object-contain drop-shadow-[0_10px_30px_rgba(246,58,230,0.2)]"
@@ -351,7 +351,7 @@ export default function RBXLandingPage() {
                 className="flex-shrink-0"
               >
                 <Image
-                  src="/Maskot/mascot-sad.png"
+                  src="/Maskot/mascot-sad.webp"
                   alt="Mascot butuh bantuan"
                   width={120}
                   height={120}
@@ -421,7 +421,7 @@ export default function RBXLandingPage() {
                   viewport={{ once: true }}
                 >
                   <Image
-                    src="/Maskot/mascot-thinking.png"
+                    src="/Maskot/mascot-thinking.webp"
                     alt="Mascot thinking"
                     width={160}
                     height={160}

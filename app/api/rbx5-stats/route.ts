@@ -53,6 +53,7 @@ export async function GET(request: NextRequest) {
         totalOrder: statsConfig.manualTotalCustomers,
         totalTerjual: statsConfig.manualTotalTerjual,
         hargaPer100Robux,
+        unlimitedStock: statsConfig.unlimitedStock || false,
         mode: "manual" as const,
       };
 
@@ -110,6 +111,7 @@ export async function GET(request: NextRequest) {
       totalOrder,
       totalTerjual,
       hargaPer100Robux,
+      unlimitedStock: statsConfig.unlimitedStock || false,
       mode: "auto" as const,
     };
 

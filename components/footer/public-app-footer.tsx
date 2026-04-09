@@ -458,7 +458,7 @@ const PublicAppFooter: React.FC = () => {
               <div className="flex flex-col items-start gap-3">
                 <div className="relative">
                   <Image
-                    src="/logo.png"
+                    src="/logo.webp"
                     alt="RBXNET Logo"
                     width={60}
                     height={60}
