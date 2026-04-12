@@ -5,8 +5,10 @@ export interface ILayoutProps {
 export interface TransactionStatusHistory {
   status: string;
   updatedAt: string;
+  timestamp?: string;
   updatedBy: string;
   notes?: string;
+  imageUrl?: string;
   rawStatus?: string;
 }
 

@@ -6,6 +6,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import {
   Home,
   MessageCircle,
+  Trophy,
   Receipt,
   User,
   LogIn,
@@ -27,6 +28,12 @@ export default function BottomNav() {
       href: user ? "/chat" : "/login",
       icon: MessageCircle,
       isActive: pathname === "/chat",
+    },
+    {
+      label: "Leaderboard",
+      href: "/leaderboard",
+      icon: Trophy,
+      isActive: pathname === "/leaderboard",
     },
     {
       label: "Transaksi",

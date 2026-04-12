@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
     const reviews = await Review.find(filter)
       .sort({ createdAt: -1 })
       .skip(skip)
-      .limit(3)
+      .limit(limit)
       .lean();
 
     const total = await Review.countDocuments(filter);

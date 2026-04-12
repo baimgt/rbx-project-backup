@@ -47,12 +47,21 @@ export default function NotificationPrompt({
 
     const permission = getNotificationPermission();
 
-    // Only show if permission is default (not yet asked)
+    if (permission === "denied") {
+      return; // Tidak bisa diaktifkan kalau sudah di-block
+    }
+
+    // Tampilkan prompt kalau permission default ATAU granted tapi belum subscribe
     if (permission === "default") {
-      // Check if user previously dismissed the prompt
       const dismissed = localStorage.getItem("notification-prompt-dismissed");
       if (!dismissed) {
         setShow(true);
+      }
+    } else if (permission === "granted") {
+      // Cek apakah subscription sudah berhasil tersimpan
+      const subscribed = localStorage.getItem("push-subscription-success");
+      if (!subscribed) {
+        setShow(true); // Tampilkan lagi supaya bisa retry
       }
     }
   }, []);
@@ -109,6 +118,9 @@ export default function NotificationPrompt({
       if (!subscribeResult.ok) {
         throw new Error("Failed to save subscription");
       }
+
+      // Tandai subscription berhasil
+      localStorage.setItem("push-subscription-success", "true");
 
       // Show success message
       alert(

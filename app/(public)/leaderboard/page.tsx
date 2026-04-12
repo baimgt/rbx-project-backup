@@ -202,7 +202,7 @@ export default function LeaderboardPage() {
       labelColor: "text-slate-400",
       amountColor: "text-white font-bold",
       nameSize: "text-sm md:text-base",
-      amountSize: "text-base md:text-lg",
+      amountSize: "text-xs md:text-lg",
       topOffset: "mt-10",
     },
     // 1st place (center)
@@ -216,7 +216,7 @@ export default function LeaderboardPage() {
       labelColor: "text-yellow-400",
       amountColor: "text-primary-100 font-extrabold",
       nameSize: "text-base md:text-lg",
-      amountSize: "text-xl md:text-2xl",
+      amountSize: "text-sm md:text-2xl",
       topOffset: "mt-0",
     },
     // 3rd place (right)
@@ -230,7 +230,7 @@ export default function LeaderboardPage() {
       labelColor: "text-amber-500",
       amountColor: "text-amber-300 font-bold",
       nameSize: "text-sm md:text-base",
-      amountSize: "text-base md:text-lg",
+      amountSize: "text-xs md:text-lg",
       topOffset: "mt-10",
     },
   ];
@@ -407,7 +407,7 @@ export default function LeaderboardPage() {
                         </div>
 
                         {/* Amount */}
-                        <p className={`${config.amountSize} ${config.amountColor}`}>
+                        <p className={`${config.amountSize} ${config.amountColor} whitespace-nowrap`}>
                           {formatCurrency(entry.totalSpent)}
                         </p>
 

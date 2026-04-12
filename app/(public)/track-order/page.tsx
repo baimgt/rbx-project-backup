@@ -841,6 +841,15 @@ export default function TrackOrderPage() {
                                         {status.notes}
                                       </p>
                                     )}
+                                    {status.imageUrl && (
+                                      <a href={status.imageUrl} target="_blank" rel="noopener noreferrer" className="block mb-2">
+                                        <img
+                                          src={status.imageUrl}
+                                          alt="Bukti pengiriman"
+                                          className="max-w-full sm:max-w-xs rounded-lg border border-white/20 hover:border-primary-100/50 transition-all cursor-pointer"
+                                        />
+                                      </a>
+                                    )}
                                     {status.updatedBy &&
                                       status.updatedBy !== "system" && (
                                         <p className="text-xs text-white/50 mt-1">

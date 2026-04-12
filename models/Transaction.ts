@@ -263,6 +263,7 @@ const transactionSchema = new mongoose.Schema(
           default: Date.now,
         },
         notes: String,
+        imageUrl: String,
         updatedBy: {
           type: mongoose.Schema.Types.Mixed, // Allow both ObjectId and String
           ref: "User",
@@ -352,6 +353,7 @@ transactionSchema.methods.updateStatus = function (
   newStatus: string,
   notes?: string,
   updatedBy?: any,
+  imageUrl?: string,
 ) {
   // Sanitize: Convert "canceled" to "cancelled"
   const sanitizedStatus = newStatus === "canceled" ? "cancelled" : newStatus;
@@ -373,12 +375,16 @@ transactionSchema.methods.updateStatus = function (
   }
 
   // Add to history (use sanitized status)
-  this.statusHistory.push({
+  const historyEntry: any = {
     status: `${statusType}:${sanitizedStatus}`,
     timestamp: new Date(),
     notes: notes || "",
     updatedBy: updatedBy,
-  });
+  };
+  if (imageUrl) {
+    historyEntry.imageUrl = imageUrl;
+  }
+  this.statusHistory.push(historyEntry);
 
   return this.save();
 };

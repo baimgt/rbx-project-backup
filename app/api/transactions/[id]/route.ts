@@ -321,7 +321,9 @@ export async function GET(
       statusHistory: (transaction.statusHistory || []).map((h: any) => ({
         status: h.status,
         updatedAt: h.timestamp || h.updatedAt,
+        timestamp: h.timestamp || h.updatedAt,
         notes: h.notes || "",
+        imageUrl: h.imageUrl || "",
         // REMOVED: updatedBy
       })),
       expiresAt: transaction.expiresAt,
@@ -382,7 +384,7 @@ export async function PUT(
     const { id } = await params;
     const transactionId = id;
     const body = await request.json();
-    const { statusType, newStatus, notes, updatedBy } = body;
+    const { statusType, newStatus, notes, updatedBy, imageUrl } = body;
 
     // Validasi input
     if (!statusType || !newStatus) {
@@ -427,7 +429,7 @@ export async function PUT(
     });
 
     // Update status menggunakan method
-    await transaction.updateStatus(statusType, newStatus, notes, updatedBy);
+    await transaction.updateStatus(statusType, newStatus, notes, updatedBy, imageUrl);
     console.log("halooo");
 
     // Debug: Check all conditions for spendedMoney update

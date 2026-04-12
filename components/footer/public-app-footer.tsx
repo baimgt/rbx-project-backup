@@ -575,7 +575,7 @@ const PublicAppFooter: React.FC = () => {
                 </li>
                 <li>
                   <Link
-                    href="https://youtu.be/MGG2oGEYF3Y"
+                    href="https://www.youtube.com/watch?v=SemqFE2fcKY"
                     target="_blank"
                     className="text-white/70 hover:text-[#f63ae6] transition-colors duration-300 flex items-center gap-2 group"
                   >

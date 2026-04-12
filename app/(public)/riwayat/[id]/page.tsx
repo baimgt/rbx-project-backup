@@ -42,12 +42,86 @@ interface ApiResponse<T> {
   error?: string;
 }
 
+function RobuxDeliveryCountdown({ completedAt, formatDate }: { completedAt: string; formatDate: (d: string) => string }) {
+  const [timeLeft, setTimeLeft] = useState("");
+  const [isExpired, setIsExpired] = useState(false);
+
+  const estimatedDate = new Date(
+    new Date(completedAt).getTime() + (5 * 24 * 60 * 60 * 1000)
+  );
+
+  useEffect(() => {
+    const updateCountdown = () => {
+      const now = new Date();
+      const diff = estimatedDate.getTime() - now.getTime();
+
+      if (diff <= 0) {
+        setIsExpired(true);
+        setTimeLeft("");
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+      if (days > 0) {
+        setTimeLeft(`${days} hari ${hours} jam lagi`);
+      } else if (hours > 0) {
+        setTimeLeft(`${hours} jam ${minutes} menit lagi`);
+      } else {
+        setTimeLeft(`${minutes} menit lagi`);
+      }
+    };
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 60000);
+    return () => clearInterval(interval);
+  }, [estimatedDate.getTime()]);
+
+  return (
+    <div className="neon-card rounded-2xl shadow-lg p-6 border border-emerald-500/30 bg-emerald-500/5">
+      <h2 className="text-lg font-bold text-emerald-400 mb-3 flex items-center gap-3">
+        <div className="w-8 h-8 bg-emerald-500/20 rounded-lg flex items-center justify-center">
+          <CheckCircle className="w-5 h-5 text-emerald-400" />
+        </div>
+        {isExpired ? "Robux Sudah Masuk" : "Robux Sudah Dikirim"}
+      </h2>
+
+      {isExpired ? (
+        <p className="text-white/70 text-sm">
+          Robux seharusnya sudah masuk ke akunmu. Jika belum, silakan hubungi CS kami.
+        </p>
+      ) : (
+        <>
+          <p className="text-white/70 text-sm mb-3">
+            Robux sedang dalam proses masuk ke akunmu melalui gamepass.
+          </p>
+          <div className="bg-white/[0.04] rounded-xl p-4 text-center">
+            <p className="text-xs text-white/50 mb-1">Estimasi Robux Masuk</p>
+            <p className="text-2xl font-bold text-emerald-400 mb-1">
+              {timeLeft}
+            </p>
+            <p className="text-xs text-white/40">
+              {formatDate(estimatedDate.toISOString())}
+            </p>
+          </div>
+          <p className="text-white/40 text-xs mt-3 text-center">
+            * Estimasi dapat lebih cepat dari waktu yang ditampilkan
+          </p>
+        </>
+      )}
+    </div>
+  );
+}
+
 export default function TransactionDetailPage() {
   const params = useParams();
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
   const [transaction, setTransaction] = useState<Transaction | null>(null);
   const [loading, setLoading] = useState(true);
+  const [claimLoading, setClaimLoading] = useState(false);
 
   useEffect(() => {
     if (!authLoading) {
@@ -255,6 +329,32 @@ export default function TransactionDetailPage() {
       }
     } catch (error) {
       toast.error("Gagal menghubungi CS");
+    }
+  };
+
+  const handleClaimGamepass = async () => {
+    if (!transaction || claimLoading) return;
+    if (!user) {
+      toast.error("Silakan login terlebih dahulu untuk klaim gamepass.");
+      router.push(`/login?redirect=${encodeURIComponent(`/riwayat/${transaction._id}`)}`);
+      return;
+    }
+    setClaimLoading(true);
+    try {
+      const result = await createChatRoom({
+        roomType: "order",
+        transactionCode: transaction.invoiceId,
+        transactionTitle: transaction.serviceName,
+      });
+      if (result.data?.success) {
+        router.push("/chat");
+      } else {
+        toast.error(result.data?.error || "Gagal membuat ruang chat. Coba lagi.");
+      }
+    } catch (error) {
+      toast.error("Terjadi kesalahan. Coba lagi.");
+    } finally {
+      setClaimLoading(false);
     }
   };
 
@@ -776,12 +876,21 @@ export default function TransactionDetailPage() {
                             {getStatusBadge(statusData.value)}
                           </div>
                           <p className="text-sm text-primary-200">
-                            {formatDate(history.updatedAt)}
+                            {formatDate(history.timestamp || history.updatedAt)}
                           </p>
                           {history.notes && (
                             <p className="text-sm text-white mt-2 italic">
                               {history.notes}
                             </p>
+                          )}
+                          {history.imageUrl && (
+                            <a href={history.imageUrl} target="_blank" rel="noopener noreferrer" className="block mt-3">
+                              <img
+                                src={history.imageUrl}
+                                alt="Bukti pengiriman"
+                                className="max-w-full sm:max-w-xs rounded-lg border border-white/20 hover:border-primary-100/50 transition-all cursor-pointer"
+                              />
+                            </a>
                           )}
                         </div>
                       </div>
@@ -791,6 +900,13 @@ export default function TransactionDetailPage() {
               })}
             </div>
           </div>
+
+          {/* Estimasi Penerimaan Robux - hanya untuk RBX 5 Hari yang sudah completed */}
+          {transaction.serviceCategory === "robux_5_hari" &&
+            transaction.orderStatus === "completed" &&
+            transaction.completedAt && (
+              <RobuxDeliveryCountdown completedAt={transaction.completedAt} formatDate={formatDate} />
+            )}
         </div>
 
         {/* Right Column - Sidebar */}
@@ -940,6 +1056,20 @@ export default function TransactionDetailPage() {
                 <span>🖨️</span>
                 Cetak Detail
               </button>
+
+              {/* Klaim Gamepass Button - hanya untuk gamepass + settlement */}
+              {transaction.serviceType === "gamepass" &&
+                transaction.paymentStatus === "settlement" &&
+                transaction.orderStatus !== "completed" && (
+                <button
+                  onClick={handleClaimGamepass}
+                  disabled={claimLoading}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-4 bg-gradient-to-r from-neon-pink via-neon-purple to-neon-pink text-white rounded-xl hover:scale-[1.02] transition-all font-bold text-lg border border-neon-pink/40 hover:border-neon-pink/60 shadow-lg shadow-neon-pink/20 hover:shadow-neon-pink/40 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                >
+                  <span>🎮</span>
+                  {claimLoading ? "Memproses..." : "Klaim Gamepass"}
+                </button>
+              )}
 
               <button
                 onClick={handleContactCS}
